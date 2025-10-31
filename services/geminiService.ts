@@ -215,13 +215,13 @@ export async function analyzeRepo(repoUrl: string): Promise<RepoAnalysis> {
   let easyIssues: Suggestion[] = [];
   let mediumIssues: Suggestion[] = [];
   let hardIssues: Suggestion[] = [];
-  
+
   if (responses.length > 1) {
     const categorizedJson = JSON.parse(responses[1].text);
     easyIssues = categorizedJson.easy || [];
     mediumIssues = categorizedJson.medium || [];
     hardIssues = categorizedJson.hard || [];
-    
+
     console.log("Categorized issues:", {
       easy: easyIssues.length,
       medium: mediumIssues.length,
@@ -231,16 +231,16 @@ export async function analyzeRepo(repoUrl: string): Promise<RepoAnalysis> {
 
   // Add AI-generated low hanging fruit to easy category
   const aiGeneratedSuggestions = analysisJson.lowHangingFruit || [];
-  
+
   // Combine with AI suggestions (deduplicate by title)
-  const addedTitles = new Set(easyIssues.map(s => s.title));
+  const addedTitles = new Set(easyIssues.map((s) => s.title));
   for (const suggestion of aiGeneratedSuggestions) {
     if (!addedTitles.has(suggestion.title)) {
-      if (suggestion.complexity === 'Easy') {
+      if (suggestion.complexity === "Easy") {
         easyIssues.push(suggestion);
-      } else if (suggestion.complexity === 'Medium') {
+      } else if (suggestion.complexity === "Medium") {
         mediumIssues.push(suggestion);
-      } else if (suggestion.complexity === 'Hard') {
+      } else if (suggestion.complexity === "Hard") {
         hardIssues.push(suggestion);
       }
       addedTitles.add(suggestion.title);

@@ -1,7 +1,7 @@
 export interface Suggestion {
   title: string;
   description: string;
-  complexity: 'Easy' | 'Medium' | 'Hard';
+  complexity: "Easy" | "Medium" | "Hard";
   tags: string[];
   issueUrl?: string;
 }
@@ -12,9 +12,9 @@ export interface LanguageUsage {
 }
 
 export interface Contributor {
-    login: string;
-    avatar_url: string;
-    html_url: string;
+  login: string;
+  avatar_url: string;
+  html_url: string;
 }
 
 export interface RepoAnalysis {

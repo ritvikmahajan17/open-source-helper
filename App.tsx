@@ -7,25 +7,24 @@ declare global {
   }
 }
 
-import React, { useState, useCallback, useEffect } from 'react';
-import { RepoInput } from './components/RepoInput';
-import { ResultsDashboard } from './components/ResultsDashboard';
-import { LoadingSpinner } from './components/LoadingSpinner';
-import type { RepoAnalysis } from './types';
-import { analyzeRepo } from './services/geminiService';
+import React, { useState, useCallback, useEffect } from "react";
+import { RepoInput } from "./components/RepoInput";
+import { ResultsDashboard } from "./components/ResultsDashboard";
+import { LoadingSpinner } from "./components/LoadingSpinner";
+import type { RepoAnalysis } from "./types";
+import { analyzeRepo } from "./services/geminiService";
 
 function App() {
   const [repoAnalysis, setRepoAnalysis] = useState<RepoAnalysis | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Rerender Lucide icons after state changes
   useEffect(() => {
     if (window.lucide) {
       window.lucide.createIcons();
     }
   }, [repoAnalysis, isLoading, error]);
-
 
   const handleAnalyze = useCallback(async (repoUrl: string) => {
     if (!repoUrl) return;
@@ -37,9 +36,13 @@ function App() {
       setRepoAnalysis(analysis);
     } catch (err) {
       console.error(err);
-      let errorMessage = err instanceof Error ? err.message : 'An unknown error occurred. Please check the console.';
+      let errorMessage =
+        err instanceof Error
+          ? err.message
+          : "An unknown error occurred. Please check the console.";
       if (errorMessage.includes("API rate limit exceeded")) {
-        errorMessage = "GitHub API rate limit exceeded. Please try again later.";
+        errorMessage =
+          "GitHub API rate limit exceeded. Please try again later.";
       }
       setError(errorMessage);
     } finally {
@@ -58,51 +61,74 @@ function App() {
         <header className="py-4 px-6 border-b border-gray-800">
           <div className="container mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3">
-               <i data-lucide="compass" className="w-6 h-6 text-red-500"></i>
+              <i data-lucide="compass" className="w-6 h-6 text-red-500"></i>
               <h1 className="text-xl font-semibold">Contribution Compass</h1>
             </div>
             <div className="flex items-center gap-4">
-               <p className="text-sm text-gray-400 hidden sm:block">Your guide to open-source contributions.</p>
+              <p className="text-sm text-gray-400 hidden sm:block">
+                Your guide to open-source contributions.
+              </p>
             </div>
           </div>
         </header>
         <main className="container mx-auto p-4 md:p-6 lg:p-8">
           {!repoAnalysis && !isLoading && (
             <div className="max-w-4xl mx-auto text-center mt-12 sm:mt-20">
-              <h2 className="text-4xl font-bold tracking-tight sm:text-6xl mb-4 font-serif">Find Your Next Contribution</h2>
+              <h2 className="text-4xl font-bold tracking-tight sm:text-6xl mb-4 font-serif">
+                Find Your Next Contribution
+              </h2>
               <p className="text-lg text-gray-300 mb-8">
-                Enter a public GitHub repository URL to get an AI-powered analysis of contribution opportunities, from documentation fixes to "good first issues."
+                Enter a public GitHub repository URL to get an AI-powered
+                analysis of contribution opportunities, from documentation fixes
+                to "good first issues."
               </p>
               <RepoInput onAnalyze={handleAnalyze} isLoading={isLoading} />
-              
+
               {/* How It Works - 3 Steps */}
               <div className="mt-16 mb-12">
-                <h3 className="text-2xl font-bold text-gray-400 mb-12 tracking-wide uppercase text-sm">How It Works</h3>
+                <h3 className="text-2xl font-bold text-gray-400 mb-12 tracking-wide uppercase text-sm">
+                  How It Works
+                </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
                   {/* Step 1 */}
                   <div className="relative p-8">
-                    <div className="text-6xl font-bold text-red-500/20 mb-4 font-serif">01</div>
-                    <h4 className="text-xl font-bold text-white mb-3 tracking-tight">Paste Repository URL</h4>
+                    <div className="text-6xl font-bold text-red-500/20 mb-4 font-serif">
+                      01
+                    </div>
+                    <h4 className="text-xl font-bold text-white mb-3 tracking-tight">
+                      Paste Repository URL
+                    </h4>
                     <p className="text-gray-400 leading-relaxed">
-                      Drop in any public GitHub repo link. We'll fetch all the essential data instantly.
+                      Drop in any public GitHub repo link. We'll fetch all the
+                      essential data instantly.
                     </p>
                   </div>
 
                   {/* Step 2 */}
                   <div className="relative p-8">
-                    <div className="text-6xl font-bold text-red-500/20 mb-4 font-serif">02</div>
-                    <h4 className="text-xl font-bold text-white mb-3 tracking-tight">AI-Powered Analysis</h4>
+                    <div className="text-6xl font-bold text-red-500/20 mb-4 font-serif">
+                      02
+                    </div>
+                    <h4 className="text-xl font-bold text-white mb-3 tracking-tight">
+                      AI-Powered Analysis
+                    </h4>
                     <p className="text-gray-400 leading-relaxed">
-                      Our AI categorizes issues by difficulty and suggests contribution ideas tailored for you.
+                      Our AI categorizes issues by difficulty and suggests
+                      contribution ideas tailored for you.
                     </p>
                   </div>
 
                   {/* Step 3 */}
                   <div className="relative p-8">
-                    <div className="text-6xl font-bold text-red-500/20 mb-4 font-serif">03</div>
-                    <h4 className="text-xl font-bold text-white mb-3 tracking-tight">Start Contributing</h4>
+                    <div className="text-6xl font-bold text-red-500/20 mb-4 font-serif">
+                      03
+                    </div>
+                    <h4 className="text-xl font-bold text-white mb-3 tracking-tight">
+                      Start Contributing
+                    </h4>
                     <p className="text-gray-400 leading-relaxed">
-                      Pick an issue matching your skill level and dive in with actionable guidance.
+                      Pick an issue matching your skill level and dive in with
+                      actionable guidance.
                     </p>
                   </div>
                 </div>
@@ -111,30 +137,33 @@ function App() {
           )}
 
           {isLoading && <LoadingSpinner />}
-          
+
           {error && (
-            <div className="max-w-2xl mx-auto my-8 text-center bg-red-900/30 border border-red-500 text-red-200 px-4 py-3 rounded-lg" role="alert">
+            <div
+              className="max-w-2xl mx-auto my-8 text-center bg-red-900/30 border border-red-500 text-red-200 px-4 py-3 rounded-lg"
+              role="alert"
+            >
               <strong className="font-bold">Error: </strong>
               <span className="block sm:inline">{error}</span>
-               <button 
-                  onClick={handleReset}
-                  className="ml-4 bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-lg transition-colors text-sm"
-               >
-                 Try Again
-               </button>
+              <button
+                onClick={handleReset}
+                className="ml-4 bg-red-600 hover:bg-red-700 text-white font-bold py-1 px-3 rounded-lg transition-colors text-sm"
+              >
+                Try Again
+              </button>
             </div>
           )}
 
           {repoAnalysis && (
             <div>
               <div className="flex justify-between items-center mb-6">
-                   <h2 className="text-3xl font-bold">{repoAnalysis.repoName}</h2>
-                   <button 
-                      onClick={handleReset}
-                      className="border border-gray-600 hover:bg-gray-800 text-gray-200 font-bold py-2 px-4 rounded-lg transition-colors"
-                   >
-                     Analyze Another Repo
-                   </button>
+                <h2 className="text-3xl font-bold">{repoAnalysis.repoName}</h2>
+                <button
+                  onClick={handleReset}
+                  className="border border-gray-600 hover:bg-gray-800 text-gray-200 font-bold py-2 px-4 rounded-lg transition-colors"
+                >
+                  Analyze Another Repo
+                </button>
               </div>
               <ResultsDashboard analysis={repoAnalysis} />
             </div>
