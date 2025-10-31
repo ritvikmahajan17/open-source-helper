@@ -1,133 +1,139 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contribution Compass</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Repo Pilot</title>
 
-  <!-- Google Fonts: Instrument Sans & Serif -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:wght@400;700&display=swap" rel="stylesheet">
-  
-  <script type="importmap">
-  {
-    "imports": {
-      "react": "https://aistudiocdn.com/react@^19.2.0",
-      "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-      "react/": "https://aistudiocdn.com/react@^19.2.0/",
-      "@google/genai": "https://aistudiocdn.com/@google/genai@^1.28.0"
-    }
-  }
-  </script>
+    <!-- Google Fonts: Instrument Sans & Serif -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Instrument Sans', 'sans-serif'],
-            serif: ['Instrument Serif', 'serif'],
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://aistudiocdn.com/react@^19.2.0",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+          "react/": "https://aistudiocdn.com/react@^19.2.0/",
+          "@google/genai": "https://aistudiocdn.com/@google/genai@^1.28.0"
+        }
+      }
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Instrument Sans", "sans-serif"],
+              serif: ["Instrument Serif", "serif"],
+            },
           },
         },
-      },
-    }
-  </script>
-  
-  <!-- Devicon for language logos -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
-  
-  <!-- Lucide icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+      };
+    </script>
 
-  <!-- tsparticles for background animation -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
+    <!-- Devicon for language logos -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
+    />
 
-  <style>
-    .line-clamp-3 {
-       overflow: hidden;
-       display: -webkit-box;
-       -webkit-box-orient: vertical;
-       -webkit-line-clamp: 3;
-    }
-    #tsparticles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-  </style>
-<link rel="stylesheet" href="/index.css">
-</head>
-<body>
-  <div id="tsparticles"></div>
-  <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
-  <script>
-    tsParticles.load("tsparticles", {
-      background: {
-        color: {
-          value: "#000000"
-        }
-      },
-      fpsLimit: 60,
-      interactivity: {
-        events: {
-          onHover: {
+    <!-- Lucide icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- tsparticles for background animation -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.0.6/tsparticles.slim.bundle.min.js"></script>
+
+    <style>
+      .line-clamp-3 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+      }
+      #tsparticles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+    </style>
+    <link rel="stylesheet" href="/index.css" />
+  </head>
+  <body>
+    <div id="tsparticles"></div>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+    <script>
+      tsParticles.load("tsparticles", {
+        background: {
+          color: {
+            value: "#000000",
+          },
+        },
+        fpsLimit: 60,
+        interactivity: {
+          events: {
+            onHover: {
+              enable: true,
+              mode: "repulse",
+            },
+            resize: true,
+          },
+          modes: {
+            repulse: {
+              distance: 60,
+              duration: 0.4,
+            },
+          },
+        },
+        particles: {
+          color: {
+            value: "#ffffff",
+          },
+          links: {
+            enable: false,
+          },
+          collisions: {
             enable: true,
-            mode: "repulse"
           },
-          resize: true
-        },
-        modes: {
-          repulse: {
-            distance: 60,
-            duration: 0.4
-          }
-        }
-      },
-      particles: {
-        color: {
-          value: "#ffffff"
-        },
-        links: {
-          enable: false
-        },
-        collisions: {
-          enable: true
-        },
-        move: {
-          direction: "none",
-          enable: true,
-          outModes: {
-            default: "out"
-          },
-          random: true,
-          speed: 1.5,
-          straight: false
-        },
-        number: {
-          density: {
+          move: {
+            direction: "none",
             enable: true,
-            area: 800
+            outModes: {
+              default: "out",
+            },
+            random: true,
+            speed: 1.5,
+            straight: false,
           },
-          value: 80
+          number: {
+            density: {
+              enable: true,
+              area: 800,
+            },
+            value: 80,
+          },
+          opacity: {
+            value: 0.5,
+          },
+          shape: {
+            type: "circle",
+          },
+          size: {
+            value: { min: 1, max: 2 },
+          },
         },
-        opacity: {
-          value: 0.5
-        },
-        shape: {
-          type: "circle"
-        },
-        size: {
-          value: { min: 1, max: 2 }
-        }
-      },
-      detectRetina: true
-    });
-  </script>
-</body>
+        detectRetina: true,
+      });
+    </script>
+  </body>
 </html>

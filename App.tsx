@@ -61,8 +61,8 @@ function App() {
         <header className="py-4 px-6 border-b border-gray-800">
           <div className="container mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <i data-lucide="compass" className="w-6 h-6 text-red-500"></i>
-              <h1 className="text-xl font-semibold">Contribution Compass</h1>
+              <i data-lucide="plane" className="w-6 h-6 text-red-500"></i>
+              <h1 className="text-xl font-serif font-semibold">Repo Pilot</h1>
             </div>
             <div className="flex items-center gap-4">
               <p className="text-sm text-gray-400 hidden sm:block">
