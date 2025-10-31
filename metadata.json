@@ -1,0 +1,5 @@
+{
+  "name": "Contribution Compass",
+  "description": "An application that analyzes open-source project repositories to generate a map of the best places for new contributors to get started. It provides heatmaps, suggestions, and detailed guidance for contribution ideas.",
+  "requestFramePermissions": []
+}
