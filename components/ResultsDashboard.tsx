@@ -1,4 +1,14 @@
 import React, { useState } from "react";
+import {
+  Star,
+  GitFork,
+  AlertCircle,
+  Users,
+  BookMarked,
+  Lightbulb,
+  CheckCircle2,
+  Inbox,
+} from "lucide-react";
 import type {
   RepoAnalysis,
   LanguageUsage,
@@ -97,10 +107,7 @@ const HowToContribute: React.FC<{ guidelines: string[] }> = ({
     <ul className="space-y-3">
       {guidelines.map((step, index) => (
         <li key={index} className="flex items-start gap-3">
-          <i
-            data-lucide="check-circle-2"
-            className="w-5 h-5 text-red-500 mt-1 flex-shrink-0"
-          />
+          <CheckCircle2 className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" />
           <span className="text-gray-300">{renderWithCodeSnippets(step)}</span>
         </li>
       ))}
@@ -138,23 +145,15 @@ export const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
     <div className="space-y-8">
       {/* Header Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <InfoCard icon={<Star />} title="Stars" value={analysis.stars} />
+        <InfoCard icon={<GitFork />} title="Forks" value={analysis.forks} />
         <InfoCard
-          icon={<i data-lucide="star"></i>}
-          title="Stars"
-          value={analysis.stars}
-        />
-        <InfoCard
-          icon={<i data-lucide="git-fork"></i>}
-          title="Forks"
-          value={analysis.forks}
-        />
-        <InfoCard
-          icon={<i data-lucide="alert-circle"></i>}
+          icon={<AlertCircle />}
           title="Open Issues"
           value={analysis.totalOpenIssues}
         />
         <InfoCard
-          icon={<i data-lucide="users"></i>}
+          icon={<Users />}
           title="Total Contributors"
           value={analysis.totalContributors}
         />
@@ -170,7 +169,7 @@ export const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
           {/* How to Contribute */}
           <div className="bg-black border border-gray-800 p-6 rounded-lg">
             <div className="flex items-center gap-3 mb-4">
-              <i data-lucide="book-marked" className="w-6 h-6 text-red-400" />
+              <BookMarked className="w-6 h-6 text-red-400" />
               <h3 className="text-xl font-semibold text-white">
                 How to Contribute
               </h3>
@@ -181,7 +180,7 @@ export const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
           {/* Contribution Ideas with Tabs */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <i data-lucide="lightbulb" className="w-6 h-6 text-red-400" />
+              <Lightbulb className="w-6 h-6 text-red-400" />
               <h3 className="text-2xl font-bold text-white">
                 Contribution Ideas
               </h3>
@@ -233,10 +232,7 @@ export const ResultsDashboard: React.FC<ResultsDashboardProps> = ({
                 ))
               ) : (
                 <div className="col-span-2 text-center py-12 bg-black border border-gray-800 rounded-lg">
-                  <i
-                    data-lucide="inbox"
-                    className="w-12 h-12 text-gray-600 mx-auto mb-3"
-                  />
+                  <Inbox className="w-12 h-12 text-gray-600 mx-auto mb-3" />
                   <p className="text-gray-400">
                     No {activeTab.toLowerCase()} issues found for this
                     repository.

@@ -1,16 +1,9 @@
-// Fix: Add a global declaration for window.lucide to fix TypeScript errors.
-declare global {
-  interface Window {
-    lucide: {
-      createIcons: () => void;
-    };
-  }
-}
-
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { RepoInput } from "./components/RepoInput";
 import { ResultsDashboard } from "./components/ResultsDashboard";
 import { LoadingSpinner } from "./components/LoadingSpinner";
+import { ParticlesBackground } from "./components/ParticlesBackground";
+import { Plane } from "lucide-react";
 import type { RepoAnalysis } from "./types";
 import { analyzeRepo } from "./services/geminiService";
 
@@ -18,13 +11,6 @@ function App() {
   const [repoAnalysis, setRepoAnalysis] = useState<RepoAnalysis | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  // Rerender Lucide icons after state changes
-  useEffect(() => {
-    if (window.lucide) {
-      window.lucide.createIcons();
-    }
-  }, [repoAnalysis, isLoading, error]);
 
   const handleAnalyze = useCallback(async (repoUrl: string) => {
     if (!repoUrl) return;
@@ -57,11 +43,12 @@ function App() {
 
   return (
     <>
+      <ParticlesBackground />
       <div className="min-h-screen text-white font-sans">
         <header className="py-4 px-6 border-b border-gray-800">
           <div className="container mx-auto flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <i data-lucide="plane" className="w-6 h-6 text-red-500"></i>
+              <Plane className="w-6 h-6 text-red-500" />
               <h1 className="text-xl font-serif font-semibold">Repo Pilot</h1>
             </div>
             <div className="flex items-center gap-4">
