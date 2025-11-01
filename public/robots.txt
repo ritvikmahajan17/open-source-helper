@@ -1,0 +1,13 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://repopilot.live/sitemap.xml
+
+# Block specific crawlers if needed (uncomment if necessary)
+# User-agent: BadBot
+# Disallow: /
+
+# Crawl-delay for all bots (optional)
+# Crawl-delay: 10
