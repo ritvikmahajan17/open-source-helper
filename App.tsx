@@ -52,6 +52,20 @@ function App() {
               <h1 className="text-xl font-serif font-semibold">Repo Pilot</h1>
             </div>
             <div className="flex items-center gap-4">
+              <a
+                href="https://www.producthunt.com/products/repo-pilot-2?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-repo-pilot-2"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-opacity hover:opacity-80 hidden sm:block"
+              >
+                <img
+                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1033368&theme=dark&t=1762028477291"
+                  alt="Repo Pilot - Your guide to open-source contributions. | Product Hunt"
+                  style={{ width: "150px", height: "32px" }}
+                  width="150"
+                  height="32"
+                />
+              </a>
               <p className="text-sm text-gray-400 hidden sm:block">
                 Your guide to open-source contributions.
               </p>
@@ -147,7 +161,7 @@ function App() {
                 <h2 className="text-3xl font-bold">{repoAnalysis.repoName}</h2>
                 <button
                   onClick={handleReset}
-                  className="border border-gray-600 hover:bg-gray-800 text-gray-200 font-bold py-2 px-4 rounded-lg transition-colors"
+                  className="border border-white hover:bg-gray-800 text-white font-bold py-2 px-4 rounded-lg transition-colors"
                 >
                   Analyze Another Repo
                 </button>
