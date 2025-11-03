@@ -1,11 +1,13 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useEffect } from "react";
 import { RepoInput } from "./components/RepoInput";
 import { ResultsDashboard } from "./components/ResultsDashboard";
 import { LoadingSpinner } from "./components/LoadingSpinner";
 import { ParticlesBackground } from "./components/ParticlesBackground";
+import { DemoModeBanner } from "./components/DemoModeBanner";
 import { Plane } from "lucide-react";
 import type { RepoAnalysis } from "./types";
 import { analyzeRepo } from "./services/geminiService";
+import { DEMO_ANALYSIS } from "./data/demoAnalysis";
 
 // Suggested repositories pool
 const SUGGESTED_REPOS = [
@@ -77,16 +79,25 @@ const getRandomRepos = (repos: typeof SUGGESTED_REPOS, count: number = 3) => {
   return shuffled.slice(0, count);
 };
 
+// Storage key for demo mode
+const DEMO_MODE_STORAGE_KEY = 'repopilot_demo_viewed';
+
 function App() {
   const [repoAnalysis, setRepoAnalysis] = useState<RepoAnalysis | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isDemoMode, setIsDemoMode] = useState(false);
 
   // Get 3 random repos on component mount
   const suggestedRepos = useMemo(() => getRandomRepos(SUGGESTED_REPOS), []);
 
   const handleAnalyze = useCallback(async (repoUrl: string) => {
     if (!repoUrl) return;
+
+    // Exit demo mode if active
+    if (isDemoMode) {
+      setIsDemoMode(false);
+    }
 
     // GA4 Event: User clicked analyze button
     if (window.gtag) {
@@ -136,11 +147,39 @@ function App() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [isDemoMode]);
 
   const handleReset = () => {
     setRepoAnalysis(null);
     setError(null);
+    setIsDemoMode(false);
+  };
+
+  const handleExitDemoMode = () => {
+    setRepoAnalysis(null);
+    setIsDemoMode(false);
+
+    // GA4 Event: Demo mode exited
+    if (window.gtag) {
+      window.gtag('event', 'demo_mode_exited', {
+        event_category: 'engagement',
+        event_label: 'banner_cta'
+      });
+    }
+  };
+
+  const handleViewExample = () => {
+    setRepoAnalysis(DEMO_ANALYSIS);
+    setIsDemoMode(true);
+    setError(null);
+
+    // GA4 Event: View example button clicked
+    if (window.gtag) {
+      window.gtag('event', 'view_example_clicked', {
+        event_category: 'engagement',
+        event_label: 'navbar'
+      });
+    }
   };
 
   return (
@@ -154,6 +193,12 @@ function App() {
               <h1 className="text-xl font-serif font-semibold">Repo Pilot</h1>
             </div>
             <div className="flex items-center gap-4">
+              <button
+                onClick={handleViewExample}
+                className="text-sm text-gray-300 hover:text-red-400 transition-colors font-medium"
+              >
+                View Example
+              </button>
               <a
                 href="https://www.producthunt.com/products/repo-pilot-2?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-repo-pilot-2"
                 target="_blank"
@@ -288,6 +333,9 @@ function App() {
 
           {repoAnalysis && (
             <div>
+              {isDemoMode && (
+                <DemoModeBanner onAnalyzeOwn={handleExitDemoMode} />
+              )}
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-3xl font-bold">{repoAnalysis.repoName}</h2>
                 <button
